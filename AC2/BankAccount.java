@@ -1,43 +1,49 @@
 package AC2;
 
+/*  Matheus de Jesus Oliveira
+	Gabriela Rodrigues Oliveira Lima
+	Alessandro Lira Novaes
+*/
 
+import java.util.InputMismatchException;
+import java.util.Random;
 
 public class BankAccount {
 	private static int lastAccountNumber = 1000; // Último número utilizado de conta
-	private String proprietario;
+	private String owner;
 	private int accountNumber; // número da conta
-	private double saldoConta; // saldo da conta
+	private double balance; // saldo da conta
 	public double totalCPMF = 0; 
-	public BankAccount(String proprietario) {
+	public BankAccount(String owner) {
 		
 	// chama outro construtor dessa classe com os valores owner e 0, para saldo
-	this(proprietario, 0);
+	this(owner, 0);
 	}
 	
 	
-	public BankAccount(String proprietario, double saldoConta) {
+	public BankAccount(String owner, double saldoConta) {
 	accountNumber = lastAccountNumber++;
-	this.saldoConta = saldoConta;
-	this.proprietario = proprietario;
+	this.balance = saldoConta;
+	this.owner = owner;
 	}
 	
 	public void deposit(double valor) {
-	double newSaldoConta = saldoConta + valor;
-	saldoConta = newSaldoConta;
+	double newSaldoConta = balance + valor;
+	balance = newSaldoConta;
 	}
 	
 	public void saque(double valor) {
 	double CPMF = 0.0;
 	CPMF = valor*0.25/100;
-	double newSaldoConta = (saldoConta - valor) - CPMF;
-	saldoConta = newSaldoConta;
+	double newSaldoConta = (balance - valor) - CPMF;
+	balance = newSaldoConta;
 	totalCPMF  += CPMF;
-	System.out.println("CPMF " + totalCPMF);
+	System.out.println("Total CPMF " + totalCPMF);
 	
 	}
 	
 	public double getBalance() {
-	return saldoConta;
+	return balance;
 	}
 	
 	public int getAccountNumber() {
@@ -45,23 +51,42 @@ public class BankAccount {
 	}
 	
 	public void transfer(double valor, BankAccount target) {
-		this.saldoConta = saldoConta - valor;
-		target.saldoConta = target.saldoConta + valor;
+		this.balance = balance - valor;
+		target.balance = target.balance + valor;
 
 		}
-	/*
-	private static String checkName(String proprietario) {
-		return proprietario;
-		// instruções do método a ser desenvolvido
+
+	private static String checkName(String owner) {
+		if(owner.matches("*.\\d.*")){
+			throw new InputMismatchException("O nome contem numeros");
+		}else {
+			return owner;
 		}
-	
+	}
 	private static String makePassword() {
-		return owner;
-		// instruções do método a ser desenvolvido
-		}*/
+		Random geradorDeNumeros = new Random();
+		int primeiraLetra = 97;
+		int ultimaLetra = 122;
+		int tamanhoDaString = 3;
+		String letras = geradorDeNumeros.ints(primeiraLetra, ultimaLetra + 1)
+				.limit(tamanhoDaString)
+				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+				.toString();
+		StringBuilder senha = new StringBuilder();
+
+		senha.append(letras);
+		for(int i = 0; i<=3; i++) {
+			int parteNumericaDaSenha = geradorDeNumeros.nextInt(9);
+			senha.append(String.valueOf(parteNumericaDaSenha));
+
+		}
+		return senha.toString();
+		
+		}
 
 	public String toString() {
-	return "Conta de " + proprietario + " - Saldo de R$ " + saldoConta;
+	return "Conta de " + owner + " - Saldo de R$ " + balance;
+	
 	}
 	
 }
