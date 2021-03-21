@@ -27,15 +27,15 @@ public class BankAccount {
 	this.owner = owner;
 	}
 	
-	public void deposit(double valor) {
-	double newSaldoConta = balance + valor;
+	public void deposit(double amount) {
+	double newSaldoConta = balance + amount;
 	balance = newSaldoConta;
 	}
 	
-	public void saque(double valor) {
+	public void saque(double amount) {
 	double CPMF = 0.0;
-	CPMF = valor*0.25/100;
-	double newSaldoConta = (balance - valor) - CPMF;
+	CPMF = amount*0.25/100;
+	double newSaldoConta = (balance - amount) - CPMF;
 	balance = newSaldoConta;
 	totalCPMF  += CPMF;
 	System.out.println("Total CPMF " + totalCPMF);
@@ -50,9 +50,9 @@ public class BankAccount {
 	return accountNumber;
 	}
 	
-	public void transfer(double valor, BankAccount target) {
-		this.balance = balance - valor;
-		target.balance = target.balance + valor;
+	public void transfer(double amount, BankAccount target) {
+		this.balance = balance - amount;
+		target.balance = target.balance + amount;
 
 		}
 
