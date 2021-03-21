@@ -21,22 +21,22 @@ public class BankAccount {
 	}
 	
 	
-	public BankAccount(String owner, double saldoConta) {
+	public BankAccount(String owner, double balance) {
 	accountNumber = lastAccountNumber++;
-	this.balance = saldoConta;
+	this.balance = balance;
 	this.owner = owner;
 	}
 	
 	public void deposit(double amount) {
-	double newSaldoConta = balance + amount;
-	balance = newSaldoConta;
+	double newBalance = balance + amount;
+	balance = newBalance;
 	}
 	
 	public void saque(double amount) {
 	double CPMF = 0.0;
 	CPMF = amount*0.25/100;
-	double newSaldoConta = (balance - amount) - CPMF;
-	balance = newSaldoConta;
+	double newBalance = (balance - amount) - CPMF;
+	balance = newBalance;
 	totalCPMF  += CPMF;
 	System.out.println("Total CPMF " + totalCPMF);
 	
